@@ -24,6 +24,7 @@ export default function Landing() {
       </nav>
 
       <header className="landing-hero">
+        <span className="pill">✨ Plan. Assign. Ship.</span>
         <h1>Manage projects with <span>clarity and speed</span></h1>
         <p>TaskFlow helps your team plan work, assign tasks and track progress on a simple, real-time board.</p>
         <div className="cta">
@@ -41,6 +42,8 @@ export default function Landing() {
           </div>
         ))}
       </section>
+
+      <p className="footer">Built with React, Node.js, Express, MongoDB and Socket.io</p>
     </div>
   );
 }

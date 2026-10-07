@@ -1,10 +1,14 @@
 import { createContext, useContext, useState } from "react";
 import api from "../api";
 
+const readUser = () => {
+  try { return JSON.parse(localStorage.getItem("user")); } catch { return null; }
+};
+
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [user, setUser] = useState(readUser);
 
   const authenticate = async (path, data) => {
     const res = await api.post(`/auth/${path}`, data);

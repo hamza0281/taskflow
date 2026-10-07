@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Plus } from "lucide-react";
 import api from "../api";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
-import StatsCharts from "../components/StatsCharts";
+const StatsCharts = lazy(() => import("../components/StatsCharts"));
 
 const COLORS = ["#6366f1", "#ec4899", "#10b981", "#f59e0b", "#06b6d4"];
 
@@ -15,6 +15,14 @@ export default function Dashboard() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({ name: "", description: "" });
+
+  const [slow, setSlow] = useState(false);
+useEffect(() => {
+  const t = setTimeout(() => setSlow(true), 4000);
+  return () => clearTimeout(t);
+}, []);
+const hour = new Date().getHours();
+const greet = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 
   const load = async () => {
     try {
@@ -52,7 +60,7 @@ export default function Dashboard() {
       <Navbar />
       <div className="page">
         <div className="hero">
-          <h1>Hello, {user.name} 👋</h1>
+          <h1>{greet}, {user.name} 👋</h1>
           <p>Here is an overview of your work.</p>
         </div>
 
@@ -63,7 +71,14 @@ export default function Dashboard() {
           <div className="stat"><div className="num" style={{ color: "#10b981" }}>{pct}%</div><div className="label">Completed</div></div>
         </div>
 
-        {stats && <StatsCharts stats={stats} />}
+        {loading && slow && (
+  <p className="wake">The free server is waking up, this can take up to a minute…</p>
+)}
+{stats && (
+  <Suspense fallback={<div className="skeleton" />}>
+    <StatsCharts stats={stats} />
+  </Suspense>
+)}
 
         <div className="card" style={{ marginTop: 22 }}>
           <h3 style={{ marginBottom: 14 }}>Create a new project</h3>
