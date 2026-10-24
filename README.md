@@ -11,18 +11,6 @@ A full-stack project management app built with the **MERN stack**. Teams can cre
 
 ---
 
-## Screenshots
-
-| Landing page | Login |
-|---|---|
-| ![Landing](screenshots/landing.png) | ![Login](screenshots/login.png) |
-
-| Dashboard | Kanban board |
-|---|---|
-| ![Dashboard](screenshots/dashboard.png) | ![Board](screenshots/board.png) |
-
----
-
 ## Features
 
 **Authentication and security**
